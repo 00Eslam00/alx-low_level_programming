@@ -11,10 +11,7 @@ int _strlen(char *str)
 {
 	int i = 0;
 
-	if (str == NULL)
-		return (0);
-
-	while (*(str + i))
+	while (str[i] != '\0')
 		i++;
 
 	return (i);
@@ -24,26 +21,34 @@ int _strlen(char *str)
  * str_concat - check the code
  * @s1 : param
  * @s2 : param
- * Return: Always 0.
+ * Return: pointer
  */
 
 char *str_concat(char *s1, char *s2)
 {
 
-	int size, i = 0, j = 0, k = 0;
+	int size1, size2, i;
 	char *ptr;
 
-	size = _strlen(s1) + _strlen(s2);
-	ptr = malloc(size * sizeof(char) + 1);
+	if (s1 == NULL)
+		s1  = "\0";
+	if (s2 == NULL)
+		s2 = "\0";
 
-	if (ptr == NULL)
-		return (NULL);
+	size1 = _strlen(s1);
+	size2 =  _strlen(s2);
+	ptr = malloc((size1 + size2) * sizeof(char) + 1);
 
-	while (*(s1 + j))
-		ptr[i++] = s1[j++];
+	if (ptr == 0)
+		return (0);
 
-	while (*(s2 + k))
-		ptr[i++] = s2[k++];
+	for (i = 0; i <= size1 + size2; i++)
+	{
+		if (i < size1)
+			ptr[i] = s1[i];
+		else
+			ptr[i] = s2[i - size1];
+	}
 
 	ptr[i] = '\0';
 
